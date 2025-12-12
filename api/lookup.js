@@ -4,13 +4,18 @@ export default function handler(req, res) {
   try {
     const { path = '' } = req.query;
 
-    const match = path.match(/^([A-Z]+-\d{5}-[A-Z]{3})-([a-zA-Z0-9]{10,12})-(\d{3})$/);
+    // const match = path.match(/^([A-Z]+-\d{5}-[A-Z]{3})-([a-zA-Z0-9]{10,12})-(\d{3})$/);
+    const match = path.match(/^([A-Z]+-\d{5}-[A-Z]{3})(?:-([a-zA-Z0-9]{1,12}))?(?:-(\d{3}))?$/);
+
+    
 
     if (!match) {
       return res.status(400).json({ error: 'Invalid code format' });
     }
 
-    const [_, humanId, logicBlock, pts] = match;
+    // const [_, humanId, logicBlock, pts] = match;
+    const [_, humanId, logicBlock = null, pts = null] = match;
+
 
     // 🔐 Later this is where we'll do logicBlock interpretation, DB fetch, etc.
     // For now, return hardcoded status
